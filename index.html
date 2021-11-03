@@ -13,6 +13,20 @@
       type="application/javascript"
       src="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.64/dist/umd/UV.js"
     ></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-6WG9094SD9"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-6WG9094SD9");
+    </script>
     <style>
       #uv {
         width: 924px;
@@ -34,7 +48,14 @@
       uv = UV.init("uv", data);
       urlAdaptor.bindTo(uv);
 
-      // ga('send', 'event', 'Videos', 'play', 'Fall Campaign');
+      uv.on(
+        "canvasIndexChange",
+        function (canvasIndex) {
+          urlAdaptor.set("cv", canvasIndex);
+          ga("send", "event", "Page", "change");
+        },
+        false
+      );
     </script>
   </body>
 </html>
