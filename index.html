@@ -52,7 +52,10 @@
         "canvasIndexChange",
         function (canvasIndex) {
           urlAdaptor.set("cv", canvasIndex);
-          gtag("event", "canvasIndexChange", canvasIndex);
+          gtag("event", "canvasIndexChange", {
+            event_category: "Navigation",
+            event_label: canvasIndex
+          });
         },
         false
       );
