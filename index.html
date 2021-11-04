@@ -52,7 +52,7 @@
         "canvasIndexChange",
         function (canvasIndex) {
           urlAdaptor.set("cv", canvasIndex);
-          ga("send", "event", "Page", "change");
+          gtag("event", "canvasIndexChange", canvasIndex);
         },
         false
       );
