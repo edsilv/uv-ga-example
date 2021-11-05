@@ -78,10 +78,19 @@
       uv.on(
         "canvasIndexChange",
         function (canvasIndex) {
-          urlAdaptor.set("cv", canvasIndex);
           gtag("event", "canvasIndexChange", {
             event_category: "Navigation",
             event_label: canvasIndex
+          });
+        },
+        false
+      );
+
+      uv.on(
+        "showDownloadDialogue",
+        function () {
+          gtag("event", "showDownloadDialogue", {
+            event_category: "Navigation"
           });
         },
         false
