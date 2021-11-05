@@ -95,6 +95,16 @@
         },
         false
       );
+
+      uv.on(
+        "showMoreInfoDialogue",
+        function () {
+          gtag("event", "showMoreInfoDialogue", {
+            event_category: "Navigation"
+          });
+        },
+        false
+      );
     </script>
   </body>
 </html>
