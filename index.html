@@ -7,11 +7,11 @@
     <title>Universal Viewer</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.64/dist/uv.css"
+      href="https://cdn.jsdelivr.net/npm/universalviewer@next/dist/uv.css"
     />
     <script
       type="application/javascript"
-      src="https://cdn.jsdelivr.net/npm/universalviewer@4.0.0-pre.64/dist/umd/UV.js"
+      src="https://cdn.jsdelivr.net/npm/universalviewer@next/dist/umd/UV.js"
     ></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
@@ -69,6 +69,7 @@
 
       const data = urlAdaptor.getInitialData({
         manifest: "https://wellcomelibrary.org/iiif/b18035723/manifest",
+        debug: true, // shows all UV events in the console
         embedded: true // needed for codesandbox frame
       });
 
@@ -79,7 +80,7 @@
         "canvasIndexChange",
         function (canvasIndex) {
           gtag("event", "canvasIndexChange", {
-            event_category: "Navigation",
+            event_category: "view_item",
             event_label: canvasIndex
           });
         },
@@ -90,7 +91,17 @@
         "showDownloadDialogue",
         function () {
           gtag("event", "showDownloadDialogue", {
-            event_category: "Navigation"
+            event_category: "engagement"
+          });
+        },
+        false
+      );
+
+      uv.on(
+        "download",
+        function () {
+          gtag("event", "download", {
+            event_category: "engagement"
           });
         },
         false
@@ -100,11 +111,38 @@
         "showMoreInfoDialogue",
         function () {
           gtag("event", "showMoreInfoDialogue", {
-            event_category: "Navigation"
+            event_category: "engagement"
           });
         },
         false
       );
+
+      uv.on(
+        "showShareDialogue",
+        function () {
+          gtag("event", "showShareDialogue", {
+            event_category: "share"
+          });
+        },
+        false
+      );
+
+      // use "non_interaction: true" for automatic events
+      uv.on(
+        "showAuthDialogue",
+        function () {
+          gtag("event", "showAuthDialogue", {
+            event_category: "engagement",
+            non_interaction: true
+          });
+        },
+        false
+      );
+
+      // full list of UV events: https://github.com/UniversalViewer/universalviewer/blob/v4/src/modules/uv-shared-module/BaseEvents.ts
+
+      // list of default Google events
+      // https://developers.google.com/analytics/devguides/collection/gtagjs/events#default_google_analytics_events
     </script>
   </body>
 </html>
